@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Baheb Rueee❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Archivo+Black&display=swap" rel="stylesheet">
     <style>
@@ -15,23 +15,25 @@
             align-items: center;
             font-family: 'Cairo', sans-serif;
             overflow: hidden;
-            touch-action: manipulation; /* Improves mobile tap response */
+            touch-action: manipulation;
         }
+
+        /* Preload GIF */
+        #preload { display: none; }
 
         .bg-effect {
             position: fixed;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: radial-gradient(circle, #aa8a2e 0%, #000 80%);
-            opacity: 0.4;
+            opacity: 0.5;
             z-index: 1;
         }
 
         .card {
             background: #111;
             border: 6px solid #d4af37;
-            width: 90%; /* Responsive for mobile */
-            max-width: 420px;
+            width: 90%; 
+            max-width: 450px;
             position: relative;
             z-index: 100;
             text-align: center;
@@ -43,42 +45,46 @@
 
         .image-stage {
             width: 100%;
-            height: 250px;
+            height: 280px; /* Bigger for mobile clarity */
             border-bottom: 5px solid #d4af37;
             background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-            .image-stage img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+        .image-stage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
         .content {
-            padding: 20px;
+            padding: 25px 15px;
             background: #000;
         }
 
         h1 {
             color: #d4af37;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin: 0;
             text-transform: uppercase;
         }
 
         .quote {
             color: #fff;
-            font-size: 1.3rem;
-            margin: 10px 0;
+            font-size: 1.5rem;
+            margin: 15px 0;
             font-weight: 900;
             text-shadow: 2px 2px #000;
-            min-height: 35px;
+            min-height: 40px;
         }
 
         .btn-wrapper {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
             align-items: center;
         }
 
@@ -86,11 +92,11 @@
             background: linear-gradient(to right, #d4af37, #fceabb, #d4af37);
             color: #000;
             border: none;
-            padding: 15px 0;
+            padding: 18px 0;
             width: 100%;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
-            border-radius: 50px;
+            border-radius: 100px;
             cursor: pointer;
             box-shadow: 0 5px 0 #8a6d1d;
             font-family: 'Archivo Black', sans-serif;
@@ -100,25 +106,23 @@
             background: transparent;
             color: #ff4d4d;
             border: 2px solid #ff4d4d;
-            padding: 8px 25px;
+            padding: 10px 30px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             z-index: 1001;
-            transition: 0.1s ease-out; /* Smooth movement on mobile */
+            font-size: 1.1rem;
         }
 
         .money {
             position: fixed;
-            font-size: 30px;
+            font-size: 35px;
             z-index: 1000;
             animation: fall 2.5s linear forwards;
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
+            to { transform: translateY(115vh) rotate(360deg); }
         }
 
         .celebrate {
@@ -126,17 +130,14 @@
         }
 
         @keyframes glow {
-            from {
-                box-shadow: 0 0 30px #d4af37;
-            }
-
-            to {
-                box-shadow: 0 0 60px #fff;
-            }
+            from { box-shadow: 0 0 30px #d4af37; }
+            to { box-shadow: 0 0 80px #fff; }
         }
     </style>
 </head>
 <body>
+
+    <img id="preload" src="party.gif">
 
     <div class="bg-effect"></div>
 
@@ -151,12 +152,10 @@
 
             <div class="btn-wrapper">
                 <button id="yesBtn" onclick="allKill()">YES</button>
-                <button id="noBtn"
-                        onmouseover="shalawe7()"
-                        onclick="shalawe7()"
-                        ontouchstart="shalawe7()">
-                    No
-                </button>
+                <button id="noBtn" 
+                        onmouseover="shalawe7()" 
+                        onclick="shalawe7()" 
+                        ontouchstart="shalawe7()">No</button>
             </div>
         </div>
     </div>
@@ -165,53 +164,55 @@
         const mainImg = document.getElementById('mainImg');
         const noBtn = document.getElementById('noBtn');
         const subText = document.getElementById('subText');
-        const mainCard = document.getElementById('mainCard');
         const headerText = document.getElementById('headerText');
+        const mainCard = document.getElementById('mainCard');
 
         let noActivated = false;
 
         function shalawe7(e) {
-            // Prevent default behavior on touch to stop it from "clicking" after jumping
             if (e && e.type === "touchstart") e.preventDefault();
 
             if (!noActivated) {
                 subText.innerText = "Hashalwa7o";
                 subText.style.color = "#ff4d4d";
-                mainImg.src = 'kick.jpg'; // Ensure kick.jpg is in your GitHub repo
+                mainImg.src = 'kick.jpg';
                 noActivated = true;
             }
 
-            // Mobile-safe jump range
-            const padding = 20;
+            // Wider padding for mobile edges
+            const padding = 50;
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
-
+            
             noBtn.style.position = 'fixed';
-            noBtn.style.left = `${Math.max(padding, x)}px`;
-            noBtn.style.top = `${Math.max(padding, y)}px`;
+            noBtn.style.left = `${Math.max(padding/2, x)}px`;
+            noBtn.style.top = `${Math.max(padding/2, y)}px`;
             noBtn.innerText = "MAFISH NO ✋";
         }
 
         function allKill() {
+            // Force the GIF to reload to start at the beginning
+            mainImg.src = 'party.gif?t=' + new Date().getTime(); 
+            
             document.body.style.background = "#d4af37";
             headerText.innerText = "seka f allah naga7🦁";
             subText.innerText = "YALLA BEENAAAA";
             subText.style.color = "#fff";
-            mainImg.src = 'party.gif'; // Ensure party.gif is in your GitHub repo
 
             mainCard.classList.add("celebrate");
             document.getElementById('yesBtn').style.display = "none";
             noBtn.style.display = "none";
 
+            // Legend Raining
             setInterval(() => {
                 const m = document.createElement('div');
                 m.className = 'money';
-                m.innerText = ['💰', '🔥', '🦁', '👑'][Math.floor(Math.random() * 4)];
+                m.innerText = ['💰', '🔥', '🦁', '👑', '💸'][Math.floor(Math.random() * 5)];
                 m.style.left = Math.random() * 100 + 'vw';
-                m.style.top = '-50px';
+                m.style.top = '-60px';
                 document.body.appendChild(m);
                 setTimeout(() => m.remove(), 2500);
-            }, 100);
+            }, 80);
         }
     </script>
 </body>
