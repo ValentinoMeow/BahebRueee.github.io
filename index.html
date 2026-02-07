@@ -18,10 +18,18 @@
             touch-action: manipulation;
         }
 
+        /* PRELOADER: Forces browser to download assets immediately */
+        #preload-container {
+            position: absolute;
+            width: 0; height: 0;
+            overflow: hidden;
+            z-index: -1;
+            visibility: hidden;
+        }
+
         .bg-effect {
             position: fixed;
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: radial-gradient(circle, #aa8a2e 0%, #000 80%);
             opacity: 0.5;
             z-index: 1;
@@ -30,7 +38,7 @@
         .card {
             background: #111;
             border: 8px solid #d4af37;
-            width: 92%;
+            width: 92%; 
             max-width: 500px;
             position: relative;
             z-index: 100;
@@ -47,12 +55,11 @@
             background: #222;
         }
 
-            .image-stage img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-            }
+        .image-stage img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
         .content {
             padding: 25px 15px;
@@ -73,13 +80,6 @@
             font-weight: 900;
             text-shadow: 3px 3px #000;
             min-height: 45px;
-        }
-
-        .btn-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
         }
 
         #yesBtn {
@@ -108,8 +108,9 @@
             font-size: 1.1rem;
             font-weight: bold;
             z-index: 1001;
-            /* SMOOTH MOVEMENT */
-            transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s ease;
+            /* SMOOTH GLIDE */
+            transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .money {
@@ -120,13 +121,16 @@
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(115vh) rotate(360deg);
-            }
+            to { transform: translateY(115vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
+
+    <div id="preload-container">
+        <img src="kick.jpg">
+        <img src="party.gif">
+    </div>
 
     <div class="bg-effect"></div>
 
@@ -139,14 +143,12 @@
             <h1 id="headerText">Will you be my valentine?</h1>
             <p class="quote" id="subText">3shan 7ata lw fe morsi</p>
 
-            <div class="btn-wrapper">
+            <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
                 <button id="yesBtn" onclick="allKill()">YES</button>
-                <button id="noBtn"
-                        onmouseover="shalawe7()"
-                        onclick="shalawe7()"
-                        ontouchstart="shalawe7()">
-                    No
-                </button>
+                <button id="noBtn" 
+                        onmouseover="shalawe7()" 
+                        onclick="shalawe7()" 
+                        ontouchstart="shalawe7()">No</button>
             </div>
         </div>
     </div>
@@ -166,7 +168,7 @@
             if (!noActivated) {
                 subText.innerText = "Hashalwa7o";
                 subText.style.color = "#ff4d4d";
-                mainImg.src = 'kick.jpg';
+                mainImg.src = 'kick.jpg'; // Loads instantly because of preloader
                 noActivated = true;
             }
 
@@ -174,32 +176,31 @@
             const padding = 50;
             let newX, newY;
 
-            // Loop to ensure the No button doesn't land on the Yes button
+            // Recalculate to avoid Yes button overlap
             do {
                 newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
                 newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
             } while (
-                // Overlap Check
-                newX < yesRect.right + 20 &&
+                newX < yesRect.right + 20 && 
                 newX + noBtn.offsetWidth > yesRect.left - 20 &&
-                newY < yesRect.bottom + 20 &&
+                newY < yesRect.bottom + 20 && 
                 newY + noBtn.offsetHeight > yesRect.top - 20
             );
-
+            
             noBtn.style.position = 'fixed';
             noBtn.style.left = `${Math.max(20, newX)}px`;
             noBtn.style.top = `${Math.max(20, newY)}px`;
             noBtn.innerText = "MAFISH NO ✋";
-            noBtn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
         }
 
         function allKill() {
+            // Force GIF reload with timestamp
             mainImg.src = 'party.gif?t=' + new Date().getTime();
             document.body.style.background = "#d4af37";
             headerText.innerText = "seka f allah naga7🦁";
             subText.innerText = "YALLA BEENAAAA";
             subText.style.color = "#fff";
-            document.getElementById('yesBtn').style.display = "none";
+            yesBtn.style.display = "none";
             noBtn.style.display = "none";
 
             setInterval(() => {
