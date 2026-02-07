@@ -18,12 +18,10 @@
             touch-action: manipulation;
         }
 
-        /* Preload GIF */
-        #preload { display: none; }
-
         .bg-effect {
             position: fixed;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             background: radial-gradient(circle, #aa8a2e 0%, #000 80%);
             opacity: 0.5;
             z-index: 1;
@@ -31,34 +29,30 @@
 
         .card {
             background: #111;
-            border: 6px solid #d4af37;
-            width: 90%; 
-            max-width: 450px;
+            border: 8px solid #d4af37;
+            width: 92%;
+            max-width: 500px;
             position: relative;
             z-index: 100;
             text-align: center;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.7);
-            border-radius: 40px;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.8);
+            border-radius: 50px;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
 
         .image-stage {
             width: 100%;
-            height: 280px; /* Bigger for mobile clarity */
-            border-bottom: 5px solid #d4af37;
+            height: 40vh;
+            border-bottom: 6px solid #d4af37;
             background: #222;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .image-stage img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+            .image-stage img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
 
         .content {
             padding: 25px 15px;
@@ -74,11 +68,11 @@
 
         .quote {
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             margin: 15px 0;
             font-weight: 900;
-            text-shadow: 2px 2px #000;
-            min-height: 40px;
+            text-shadow: 3px 3px #000;
+            min-height: 45px;
         }
 
         .btn-wrapper {
@@ -92,52 +86,47 @@
             background: linear-gradient(to right, #d4af37, #fceabb, #d4af37);
             color: #000;
             border: none;
-            padding: 18px 0;
+            padding: 20px 0;
             width: 100%;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             border-radius: 100px;
             cursor: pointer;
-            box-shadow: 0 5px 0 #8a6d1d;
+            box-shadow: 0 6px 0 #8a6d1d;
             font-family: 'Archivo Black', sans-serif;
+            position: relative;
+            z-index: 105;
         }
 
         #noBtn {
             background: transparent;
             color: #ff4d4d;
-            border: 2px solid #ff4d4d;
-            padding: 10px 30px;
-            border-radius: 50px;
+            border: 3px solid #ff4d4d;
+            padding: 12px 40px;
+            border-radius: 100px;
             cursor: pointer;
+            font-size: 1.1rem;
             font-weight: bold;
             z-index: 1001;
-            font-size: 1.1rem;
+            /* SMOOTH MOVEMENT */
+            transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s ease;
         }
 
         .money {
             position: fixed;
-            font-size: 35px;
+            font-size: 45px;
             z-index: 1000;
             animation: fall 2.5s linear forwards;
         }
 
         @keyframes fall {
-            to { transform: translateY(115vh) rotate(360deg); }
-        }
-
-        .celebrate {
-            animation: glow 1.5s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 30px #d4af37; }
-            to { box-shadow: 0 0 80px #fff; }
+            to {
+                transform: translateY(115vh) rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
-
-    <img id="preload" src="party.gif">
 
     <div class="bg-effect"></div>
 
@@ -152,10 +141,12 @@
 
             <div class="btn-wrapper">
                 <button id="yesBtn" onclick="allKill()">YES</button>
-                <button id="noBtn" 
-                        onmouseover="shalawe7()" 
-                        onclick="shalawe7()" 
-                        ontouchstart="shalawe7()">No</button>
+                <button id="noBtn"
+                        onmouseover="shalawe7()"
+                        onclick="shalawe7()"
+                        ontouchstart="shalawe7()">
+                    No
+                </button>
             </div>
         </div>
     </div>
@@ -163,9 +154,9 @@
     <script>
         const mainImg = document.getElementById('mainImg');
         const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
         const subText = document.getElementById('subText');
         const headerText = document.getElementById('headerText');
-        const mainCard = document.getElementById('mainCard');
 
         let noActivated = false;
 
@@ -179,31 +170,38 @@
                 noActivated = true;
             }
 
-            // Wider padding for mobile edges
+            const yesRect = yesBtn.getBoundingClientRect();
             const padding = 50;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
-            
+            let newX, newY;
+
+            // Loop to ensure the No button doesn't land on the Yes button
+            do {
+                newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+                newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+            } while (
+                // Overlap Check
+                newX < yesRect.right + 20 &&
+                newX + noBtn.offsetWidth > yesRect.left - 20 &&
+                newY < yesRect.bottom + 20 &&
+                newY + noBtn.offsetHeight > yesRect.top - 20
+            );
+
             noBtn.style.position = 'fixed';
-            noBtn.style.left = `${Math.max(padding/2, x)}px`;
-            noBtn.style.top = `${Math.max(padding/2, y)}px`;
+            noBtn.style.left = `${Math.max(20, newX)}px`;
+            noBtn.style.top = `${Math.max(20, newY)}px`;
             noBtn.innerText = "MAFISH NO ✋";
+            noBtn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
         }
 
         function allKill() {
-            // Force the GIF to reload to start at the beginning
-            mainImg.src = 'party.gif?t=' + new Date().getTime(); 
-            
+            mainImg.src = 'party.gif?t=' + new Date().getTime();
             document.body.style.background = "#d4af37";
             headerText.innerText = "seka f allah naga7🦁";
             subText.innerText = "YALLA BEENAAAA";
             subText.style.color = "#fff";
-
-            mainCard.classList.add("celebrate");
             document.getElementById('yesBtn').style.display = "none";
             noBtn.style.display = "none";
 
-            // Legend Raining
             setInterval(() => {
                 const m = document.createElement('div');
                 m.className = 'money';
