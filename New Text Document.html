@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Baheb Rueee❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden;
+        }
+
+        .bg-effect {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #aa8a2e 0%, #000 80%);
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .card {
+            background: #111;
+            border: 10px solid #d4af37;
+            width: 480px;
+            position: relative;
+            z-index: 100;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(212, 175, 55, 0.7);
+            border-radius: 60px;
+            overflow: hidden;
+        }
+
+        .image-stage {
+            width: 100%;
+            height: 350px;
+            border-bottom: 8px solid #d4af37;
+            background: #222;
+        }
+
+            .image-stage img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .content {
+            padding: 30px;
+            background: #000;
+        }
+
+        h1 {
+            color: #d4af37;
+            font-size: 26px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .quote {
+            color: #fff;
+            font-size: 1.6rem;
+            margin: 15px 0;
+            font-weight: 900;
+            text-shadow: 2px 2px #000;
+            min-height: 40px;
+        }
+
+        #yesBtn {
+            background: linear-gradient(to right, #d4af37, #fceabb, #d4af37);
+            color: #000;
+            border: none;
+            padding: 22px 0;
+            width: 100%;
+            font-size: 28px;
+            font-weight: 900;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #8a6d1d;
+            font-family: 'Archivo Black', sans-serif;
+        }
+
+        #noBtn {
+            background: transparent;
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            padding: 10px 30px;
+            margin-top: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .money {
+            position: fixed;
+            font-size: 40px;
+            z-index: 1000;
+            animation: fall 2.5s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-effect"></div>
+
+    <div class="card" id="mainCard">
+        <div class="image-stage">
+            <img id="mainImg" src="nasser.jpg">
+        </div>
+
+        <div class="content">
+            <h1 id="headerText">Will you be my valentine?</h1>
+            <p class="quote" id="subText">3shan 7ata lw fe morsi</p>
+
+            <button id="yesBtn" onclick="allKill()">YES</button>
+            <button id="noBtn" onmouseover="shalawe7()">No</button>
+        </div>
+    </div>
+
+    <script>
+        const mainImg = document.getElementById('mainImg');
+        const noBtn = document.getElementById('noBtn');
+        const subText = document.getElementById('subText');
+
+        function shalawe7() {
+            // IMAGE SWAP
+            mainImg.src = 'kick.jpg';
+
+            // TEXT TRANSFORMATION
+            subText.innerText = "Hashalwa7o";
+            subText.style.color = "#ff4d4d";
+
+            // BUTTON ESCAPE
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.innerText = "MAFISH NO ✋";
+        }
+
+        function allKill() {
+            document.body.style.background = "#d4af37";
+            document.getElementById('headerText').innerText = "seka f allah naga7🦁";
+            subText.innerText = "YALLA BEENAAAA";
+            subText.style.color = "#fff";
+            mainImg.src = 'party.gif';
+
+            document.getElementById('yesBtn').style.display = "none";
+            noBtn.style.display = "none";
+
+            setInterval(() => {
+                const m = document.createElement('div');
+                m.className = 'money';
+                m.innerText = ['💰', '🔥', '🦁', '👑'][Math.floor(Math.random() * 4)];
+                m.style.left = Math.random() * 100 + 'vw';
+                m.style.top = '-50px';
+                document.body.appendChild(m);
+                setTimeout(() => m.remove(), 2500);
+            }, 100);
+        }
+    </script>
+
+</body>
+</html>
